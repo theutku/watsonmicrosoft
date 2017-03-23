@@ -1,0 +1,37 @@
+{
+  "name": "watsonmicrosoft",
+  "version": "1.0.0",
+  "description": "watson with micosoft bot framework",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/app",
+    "postinstall": "gulp tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theutku/watsonmicrosoft.git"
+  },
+  "keywords": [
+    "bot",
+    "microsoft",
+    "watson"
+  ],
+  "author": "theutku",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theutku/watsonmicrosoft/issues"
+  },
+  "homepage": "https://github.com/theutku/watsonmicrosoft#readme",
+  "dependencies": {
+    "@types/es6-promise": "0.0.32",
+    "@types/restify": "^2.0.42",
+    "botbuilder": "^3.7.0",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.5",
+    "restify": "^4.3.0",
+    "ts-node": "^2.1.0",
+    "typescript": "^2.2.1",
+    "watson-developer-cloud": "^2.25.1"
+  }
+}
