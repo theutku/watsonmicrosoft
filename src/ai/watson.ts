@@ -1,5 +1,6 @@
 import * as watson from 'watson-developer-cloud';
 import { BotBase } from './botbuilder';
+import * as restify from 'restify';
 
 class WatsonBase extends BotBase {
 
@@ -23,7 +24,7 @@ class WatsonBase extends BotBase {
 
     }
 
-    watsonMessage(message: string) {
+    watsonMessage(message: string): Promise<string> {
         return new Promise((resolve, reject) => {
             this.conversations.message({
                 workspace_id: process.env.workspaceId,
@@ -47,31 +48,48 @@ class WatsonBase extends BotBase {
 
     watsonInteraction() {
         return new Promise((resolve, reject) => {
-            this.controller.hears('', ['direct_mention', 'direct_message'], (bot, message) => {
-                if (message.text.includes('<')) {
-                    console.log(message.text);
-                    var user = message.text.substring(message.text.lastIndexOf("<"), message.text.lastIndexOf(">") + 1);
-                    console.log(user);
-                    this.miboPlanRequest(bot, message, user);
-                } else {
-                    this.watsonMessage(message.text.toString().trim()).then((res) => {
-                        if (typeof res !== 'undefined') {
-                            if (this.intent == 'perform_insight') {
-                                this.insightInit(bot, message);
-                            } else {
-                                console.log(this.context);
-                                bot.reply(message, res);
-                            }
-                        } else {
-                            bot.reply(message, 'Could not get response from Watson.');
-                        }
-                    }).catch((err) => {
-                        bot.reply(message, 'Could not get response from Watson.');
-                        reject(err);
-                    })
-                }
+
+            this.bot.dialog('/', (session) => {
+                this.watsonMessage(session.message.text).then((res) => {
+                    if (res.length || typeof res !== 'undefined') {
+                        session.send(res);
+                    } else {
+                        session.send('Could not get response from Watson.');
+                        reject();
+                    }
+
+                }).catch((err) => {
+                    session.send('Watson Error');
+                    reject(err);
+                })
             })
+
+            // this.controller.hears('', ['direct_mention', 'direct_message'], (bot, message) => {
+            //     if (message.text.includes('<')) {
+            //         console.log(message.text);
+            //         var user = message.text.substring(message.text.lastIndexOf("<"), message.text.lastIndexOf(">") + 1);
+            //         console.log(user);
+            //         this.miboPlanRequest(bot, message, user);
+            //     } else {
+            //         this.watsonMessage(message.text.toString().trim()).then((res) => {
+            //             if (typeof res !== 'undefined') {
+            //                 if (this.intent == 'perform_insight') {
+            //                     this.insightInit(bot, message);
+            //                 } else {
+            //                     console.log(this.context);
+            //                     bot.reply(message, res);
+            //                 }
+            //             } else {
+            //                 bot.reply(message, 'Could not get response from Watson.');
+            //             }
+            //         }).catch((err) => {
+            //             bot.reply(message, 'Could not get response from Watson.');
+            //             reject(err);
+            //         })
+            //     }
+            // })
             resolve();
+
         })
     }
 
@@ -188,10 +206,10 @@ class WatsonBase extends BotBase {
         });
     }
 
-    init() {
+    init(server: restify.Server) {
         return new Promise((resolve, reject) => {
-            this.loadBot().then(() => {
-                console.log('Slack Bot initialized...');
+            this.loadBot(server).then(() => {
+                console.log('Bot initialized...');
                 this.loadConversations().then(() => {
                     this.watsonInteraction().then(() => {
                         this.personalityInsight().then(() => {
@@ -204,10 +222,10 @@ class WatsonBase extends BotBase {
                     })
                 })
             }).catch((err) => {
-                console.log('Error: Cannot connect to Slack.');
+                console.log('Error: ', err);
                 reject(err);
             })
-        })
+        });
     }
 
     constructor() {

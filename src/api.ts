@@ -47,16 +47,11 @@ class WatsonBotApp {
                     process.exit(2);
                 }
                 console.log('Bot App started listening at port: ', this.server.url, ' ...');
-                BotBase.loadBot(this.server).then(() => {
-                    console.log('Bot initialized...');
-                    WatsonBase.init().then(() => {
-                        console.log('Watson initialized...');
-                        resolve();
-                    }).catch((err) => {
-                        process.exit(2);
-                    })
+                WatsonBase.init(this.server).then(() => {
+                    resolve();
+                }).catch((err) => {
+                    process.exit(2);
                 })
-
             })
         })
 

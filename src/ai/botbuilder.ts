@@ -25,6 +25,4 @@ export class BotBase {
 
 }
 
-
-
 export default new BotBase();
