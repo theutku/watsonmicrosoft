@@ -27,11 +27,11 @@ class WatsonBotApp {
     testRoute() {
         return new Promise((resolve, reject) => {
             this.server.get('/', (req: restify.Request, res: restify.Response, next: restify.Next) => {
-                res.status(200).send('App is working');
+                res.send(200, 'App is working');
             })
 
             this.server.get('/status', (req: restify.Request, res: restify.Response, next: restify.Next) => {
-                res.status(200).send('App is OK!');
+                res.send(200, 'App is OK!');
             })
             resolve();
         })
