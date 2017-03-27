@@ -18,7 +18,7 @@ class WatsonBotApp {
                 res.send(200, 'App is OK!');
             })
             this.server.get('/api/messages', (req: restify.Request, res: restify.Response, next: restify.Next) => {
-                var body = "<html><head></head><body><iframe style='height:100%; width:100%;' src='https://webchat.botframework.com/embed/aibrite?s=" + process.env.microsoft_secret + "'></iframe></body></html>";
+                var body = "<html><head></head><body><iframe style='height:480px; width:100%;' src='https://webchat.botframework.com/embed/aibrite?s=" + process.env.microsoft_secret + "'></iframe></body></html>";
                 res.writeHead(200, {
                     'Content-Length': Buffer.byteLength(body),
                     'Content-Type': 'text/html'
