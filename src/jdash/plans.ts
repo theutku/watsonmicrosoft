@@ -1,4 +1,11 @@
-export const jdashPlans = [
+export interface IJdashPlan {
+    name: string,
+    appLimit: string,
+    userLimit: string,
+    price: string
+}
+
+export const jdashPlans: [IJdashPlan] = [
     {
         name: 'starter',
         appLimit: '5',

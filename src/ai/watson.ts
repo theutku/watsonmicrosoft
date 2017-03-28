@@ -2,7 +2,7 @@ import * as watson from 'watson-developer-cloud';
 import { BotBase } from './botbuilder';
 import * as restify from 'restify';
 import * as botbuilder from 'botbuilder';
-import { jdashPlans } from '../jdash/plans'
+import { IJdashPlan, jdashPlans } from '../jdash/plans';
 
 class WatsonBase extends BotBase {
 
@@ -76,7 +76,7 @@ class WatsonBase extends BotBase {
                                 break;
                             case 'jdash_plans':
                                 var receipts = [];
-                                jdashPlans.forEach((plan) => {
+                                jdashPlans.forEach((plan: IJdashPlan) => {
                                     var receipt = this.createReceiptCard(session, plan.name, plan.price, plan.appLimit, plan.userLimit, 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png', 'http://app.jdash.io', 'See Demo');
                                     receipts.push(receipt);
                                 });
@@ -102,6 +102,10 @@ class WatsonBase extends BotBase {
             resolve();
 
         })
+    }
+
+    getUserEmailPrompt() {
+
     }
 
     init(server: restify.Server) {
