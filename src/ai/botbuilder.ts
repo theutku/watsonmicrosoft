@@ -23,6 +23,12 @@ export class BotBase {
 
     }
 
+    createNewMessage(session: botbuilder.Session, layoutType: string, attachments?: any[]) {
+        return new botbuilder.Message(session)
+            .attachmentLayout(botbuilder.AttachmentLayout.carousel)
+            .attachments(attachments);
+    }
+
     createReceiptCard(session: botbuilder.Session, title: string, price: string, appLimit: string, userLimit: string, imageUrl: string, buttonUrl: string, buttonText?: string, tax?: string, ) {
         return new botbuilder.ReceiptCard(session)
             .title(title.toUpperCase())

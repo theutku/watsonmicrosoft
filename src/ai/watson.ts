@@ -1,7 +1,6 @@
 import * as watson from 'watson-developer-cloud';
 import { BotBase } from './botbuilder';
 import * as restify from 'restify';
-import * as botbuilder from 'botbuilder';
 import { IJdashPlan, jdashPlans } from '../jdash/plans';
 
 class WatsonBase extends BotBase {
@@ -80,9 +79,7 @@ class WatsonBase extends BotBase {
                                     var receipt = this.createReceiptCard(session, plan.name, plan.price, plan.appLimit, plan.userLimit, 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png', 'http://app.jdash.io', 'See Demo');
                                     receipts.push(receipt);
                                 });
-                                var plans = new botbuilder.Message(session)
-                                    .attachmentLayout(botbuilder.AttachmentLayout.carousel)
-                                    .attachments(receipts);
+                                var plans = this.createNewMessage(session, 'carousel', receipts)
                                 session.send(res);
                                 session.send(plans);
                                 break;
