@@ -55,7 +55,7 @@ class WatsonBase extends BotBase {
                         switch (this.intent) {
                             case 'services':
                                 session.send(res);
-                                this.createCardAttachments(session);
+                                this.createAllServicesCards(session);
                                 break;
                             case 'machine_learning':
                                 this.createThumbnailCard(session, 'Machine Learning', 'http://bigdata-madesimple.com/wp-content/uploads/2016/04/Artificial-Intelligence.jpg', 'http://aibrite.com/', 'Artificial Intelligence and Machine Learning Implementations', null, 'Discover')
