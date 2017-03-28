@@ -25,25 +25,24 @@ export class BotBase {
 
     createReceiptCard(session: botbuilder.Session, title: string, price: string, appLimit: string, userLimit: string, imageUrl: string, buttonUrl: string, buttonText?: string, tax?: string, ) {
         return new botbuilder.ReceiptCard(session)
-            .title(title)
-            .title('John Doe')
+            .title(title.toUpperCase())
             .facts([
                 botbuilder.Fact.create(session, appLimit, 'App Limit'),
                 botbuilder.Fact.create(session, userLimit, 'User Limit')
             ])
             .items([
-                botbuilder.ReceiptItem.create(session, price, 'App Service')
+                botbuilder.ReceiptItem.create(session, '$' + price, 'JDash Cloud Service')
                     .quantity('720')
                     .image(botbuilder.CardImage.create(session, 'https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png'))
             ])
             .tax(tax || '0')
-            .total(price)
+            .total('$' + price)
             .buttons([
                 botbuilder.CardAction.openUrl(session, buttonUrl, buttonText || 'More Information')
             ]);
     }
 
-    createAllServicesCards(session: botbuilder.Session) {
+    sendAllServicesCards(session: botbuilder.Session) {
         var cards = [
             new botbuilder.HeroCard(session)
                 .title('Aibrite Artificial Intelligence')
@@ -86,7 +85,7 @@ export class BotBase {
         return session.send(reply);
     }
 
-    createThumbnailCard(session: botbuilder.Session, title: string, imageUrl: string, buttonUrl: string, subtitle?: string, text?: string, buttonText?: string) {
+    sendThumbnailCard(session: botbuilder.Session, title: string, imageUrl: string, buttonUrl: string, subtitle?: string, text?: string, buttonText?: string) {
         var thumbNail = new botbuilder.ThumbnailCard(session)
             .title(title)
             .subtitle(subtitle || 'Info')

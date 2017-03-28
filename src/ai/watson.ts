@@ -2,6 +2,7 @@ import * as watson from 'watson-developer-cloud';
 import { BotBase } from './botbuilder';
 import * as restify from 'restify';
 import * as botbuilder from 'botbuilder';
+import { jdashPlans } from '../jdash/plans'
 
 class WatsonBase extends BotBase {
 
@@ -55,23 +56,35 @@ class WatsonBase extends BotBase {
                         switch (this.intent) {
                             case 'services':
                                 session.send(res);
-                                this.createAllServicesCards(session);
+                                this.sendAllServicesCards(session);
                                 break;
                             case 'machine_learning':
-                                this.createThumbnailCard(session, 'Machine Learning', 'http://bigdata-madesimple.com/wp-content/uploads/2016/04/Artificial-Intelligence.jpg', 'http://aibrite.com/', 'Artificial Intelligence and Machine Learning Implementations', null, 'Discover')
+                                this.sendThumbnailCard(session, 'Machine Learning', 'http://bigdata-madesimple.com/wp-content/uploads/2016/04/Artificial-Intelligence.jpg', 'http://aibrite.com/', 'Artificial Intelligence and Machine Learning Implementations', null, 'Discover')
                                 session.send(res);
                                 break;
                             case 'data_visualisation':
-                                this.createThumbnailCard(session, 'Smart Data Visualisation', 'https://cdn.outsource2india.com/webanalytics/images/data-visualization-sample.jpg', 'http://aibrite.com/', 'Visualize Your Data In Seconds', null, 'Find Out More')
+                                this.sendThumbnailCard(session, 'Smart Data Visualisation', 'https://cdn.outsource2india.com/webanalytics/images/data-visualization-sample.jpg', 'http://aibrite.com/', 'Visualize Your Data In Seconds', null, 'Find Out More')
                                 session.send(res);
                                 break;
                             case 'jdash':
-                                this.createThumbnailCard(session, 'Aibrite Dashboards', 'http://aibrite.com/wp-content/uploads/2015/12/jdash-dashboard-drag-drop-finger.png', 'http://jdash.io/', 'JDash Dashboard Framework', null, 'See in Action')
+                                this.sendThumbnailCard(session, 'Aibrite Dashboards', 'http://aibrite.com/wp-content/uploads/2015/12/jdash-dashboard-drag-drop-finger.png', 'http://jdash.io/', 'JDash Dashboard Framework', null, 'See in Action')
                                 session.send(res);
                                 break;
                             case 'aibrite':
-                                this.createThumbnailCard(session, 'Aibrite', 'http://aibrite.com/wp-content/uploads/2017/03/cropped-cropped-logo-1-e1490694687582.png', 'http://aibrite.com/', 'MACHINE INTELLIGENCE AND SMART DATA VISUALIZATIONS', 'As being a machine intelligence & data visualization company we can add artificial intelligence to your existing applications. We can analyse your data and automatically generate smart data visualizations. You can also use our dashboard framework Jdash to add drag-drop dashboards into your applications.', 'Homepage')
+                                this.sendThumbnailCard(session, 'Aibrite', 'http://aibrite.com/wp-content/uploads/2017/03/cropped-cropped-logo-1-e1490694687582.png', 'http://aibrite.com/', 'MACHINE INTELLIGENCE AND SMART DATA VISUALIZATIONS', 'As being a machine intelligence & data visualization company we can add artificial intelligence to your existing applications. We can analyse your data and automatically generate smart data visualizations. You can also use our dashboard framework Jdash to add drag-drop dashboards into your applications.', 'Homepage')
                                 session.send(res);
+                                break;
+                            case 'jdash_plans':
+                                var receipts = [];
+                                jdashPlans.forEach((plan) => {
+                                    var receipt = this.createReceiptCard(session, plan.name, plan.price, plan.appLimit, plan.userLimit, 'https://github.com/amido/azure-vector-icons/raw/master/renders/traffic-manager.png', 'http://app.jdash.io', 'See Demo');
+                                    receipts.push(receipt);
+                                });
+                                var plans = new botbuilder.Message(session)
+                                    .attachmentLayout(botbuilder.AttachmentLayout.carousel)
+                                    .attachments(receipts);
+                                session.send(res);
+                                session.send(plans);
                                 break;
                             default:
                                 session.send(res);
