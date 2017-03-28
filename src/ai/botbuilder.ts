@@ -24,7 +24,7 @@ export class BotBase {
     }
 
     createCardAttachments(session: botbuilder.Session) {
-        return [
+        var cards = [
             new botbuilder.HeroCard(session)
                 .title('Aibrite Artificial Intelligence')
                 .subtitle('Artificial Intelligence and Machine Learning Implementations')
@@ -58,6 +58,31 @@ export class BotBase {
                     botbuilder.CardAction.openUrl(session, 'http://jdash.io/', 'See in Action')
                 ])
         ];
+
+        var reply = new botbuilder.Message(session)
+            .attachmentLayout(botbuilder.AttachmentLayout.carousel)
+            .attachments(cards);
+
+        return session.send(reply);
+    }
+
+    createThumbnailCard(session: botbuilder.Session, title: string, imageUrl: string, buttonUrl: string, subtitle?: string, text?: string, buttonText?: string) {
+        var thumbNail = new botbuilder.ThumbnailCard(session)
+            .title(title)
+            .subtitle(subtitle || 'Info')
+            .text(text || 'Click the link below for more!')
+            .images([
+                botbuilder.CardImage.create(session, imageUrl)
+            ])
+            .buttons([
+                botbuilder.CardAction.openUrl(session, buttonUrl, buttonText || 'Get Started')
+            ]);
+
+        var reply = new botbuilder.Message(session)
+            .attachmentLayout(botbuilder.AttachmentLayout.list)
+            .addAttachment(thumbNail);
+
+        return session.send(reply);
     }
 
 }
