@@ -1,6 +1,7 @@
 import * as watson from 'watson-developer-cloud';
 import { BotBase } from './botbuilder';
 import * as restify from 'restify';
+import * as botbuilder from 'botbuilder';
 
 class WatsonBase extends BotBase {
 
@@ -51,14 +52,24 @@ class WatsonBase extends BotBase {
             this.bot.dialog('/', (session) => {
                 this.watsonMessage(session.message.text).then((res) => {
                     if (res.length || typeof res !== 'undefined') {
-                        session.send(res);
+                        if (this.intent == 'greeting') {
+                            var cards = this.createCardAttachments(session);
+
+                            var reply = new botbuilder.Message(session)
+                                .attachmentLayout(botbuilder.AttachmentLayout.carousel)
+                                .attachments(cards);
+
+                            session.send(reply);
+                        } else {
+                            session.send(res);
+                        }
                     } else {
                         session.send('Could not get response from Watson.');
                         reject();
                     }
 
                 }).catch((err) => {
-                    session.send('Watson Error');
+                    session.send('Error: Cannot connect to Watson');
                     reject(err);
                 })
             })
