@@ -9,7 +9,7 @@ export class WatsonBase extends BotBase {
     conversations;
     context: object = {}
 
-    private intent;
+    intent;
 
     loadConversations() {
         return new Promise((resolve, reject) => {
@@ -88,7 +88,8 @@ export class WatsonBase extends BotBase {
                         });
                         var plans = this.createNewMessage(session, 'carousel', receipts)
                         session.send(res);
-                        session.send(plans);
+                        session.send(plans)
+                        // session.beginDialog('/subscribe')
                         break;
                     default:
                         session.send(res);
@@ -98,6 +99,7 @@ export class WatsonBase extends BotBase {
             }
 
         }).catch((err) => {
+            console.log(err);
             session.send('Error: Cannot connect to Watson');
         })
     }
