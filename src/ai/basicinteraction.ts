@@ -9,7 +9,7 @@ class BasicInteraction extends WatsonBase {
         return new Promise((resolve, reject) => {
             this.bot.dialog('/', [(session) => {
                 this.basicIntents(session.message.text, session).then(() => {
-                    return;
+                    session.send('Anything else I can help you with?');
                 }).catch((err) => {
                     reject(err);
                 })
@@ -17,9 +17,9 @@ class BasicInteraction extends WatsonBase {
                 if (!result.response) {
                     session.endDialog('I do not think you have chosen a valid option, did you?');
                 }
-                var userChoice = result.response.entity
+                var userChoice = result.response.entity;
                 this.basicIntents(userChoice, session).then(() => {
-                    return;
+                    session.send('Anything else I can help you with?');
                 }).catch((err) => {
                     reject(err);
                 })
