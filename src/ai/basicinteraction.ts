@@ -9,7 +9,7 @@ class BasicInteraction extends WatsonBase {
         return new Promise((resolve, reject) => {
             this.bot.dialog('/', [(session) => {
                 this.basicIntents(session.message.text, session).then(() => {
-                    session.send('Anything else I can help you with? Aske me more!');
+                    session.send('Anything else I can help you with? Ask me more!');
                 }).catch((err) => {
                     reject(err);
                 })
