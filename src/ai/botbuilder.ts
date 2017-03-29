@@ -19,17 +19,13 @@ export class BotBase {
         })
     }
 
-    constructor() {
-
-    }
-
     createNewMessage(session: botbuilder.Session, layoutType: string, attachments?: any[]) {
         return new botbuilder.Message(session)
             .attachmentLayout(botbuilder.AttachmentLayout.carousel)
             .attachments(attachments);
     }
 
-    createReceiptCard(session: botbuilder.Session, title: string, price: string, appLimit: string, userLimit: string, imageUrl: string, buttonUrl: string, buttonText?: string, tax?: string, ) {
+    createReceiptCard(session: botbuilder.Session, title: string, price: string, appLimit: string, userLimit: string, imageUrl: string, buttonUrl: string, buttonText?: string) {
         return new botbuilder.ReceiptCard(session)
             .title(title.toUpperCase())
             .facts([
@@ -41,7 +37,6 @@ export class BotBase {
                     .quantity('720')
                     .image(botbuilder.CardImage.create(session, 'https://github.com/amido/azure-vector-icons/raw/master/renders/cloud-service.png'))
             ])
-            .tax(tax || '0')
             .total('$' + price)
             .buttons([
                 botbuilder.CardAction.openUrl(session, buttonUrl, buttonText || 'More Information')
@@ -110,6 +105,9 @@ export class BotBase {
         return session.send(reply);
     }
 
+    constructor() {
+
+    }
 }
 
 export default new BotBase();

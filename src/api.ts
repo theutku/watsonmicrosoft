@@ -2,7 +2,7 @@ import * as restify from 'restify';
 import * as botbuilder from 'botbuilder';
 
 import BotBase from './ai/botbuilder';
-import WatsonBase from './ai/watson';
+import BasicInteractions from './ai/basicinteraction';
 
 class WatsonBotApp {
 
@@ -42,7 +42,7 @@ class WatsonBotApp {
                 console.log('Bot App started listening at port: ', this.server.url, ' ...');
                 this.loadRoutes().then(() => {
                     console.log('Test Routes loaded...');
-                    WatsonBase.init(this.server).then(() => {
+                    BasicInteractions.init(this.server).then(() => {
                         resolve();
                     }).catch((err) => {
                         process.exit(2);
