@@ -37,6 +37,7 @@ class BasicInteraction extends WatsonBase {
             //         session.send('As you wish! But you are missing on something great!');
             //         session.endConversation('What would you like to learn more about? Please ask me!');
             //     } else {
+            //         // Get user e-mail and post to jdash
             //         session.endConversation('All Done! What else can I do for you?');
             //     }
             // }])
