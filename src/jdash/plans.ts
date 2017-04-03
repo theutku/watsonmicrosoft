@@ -10,7 +10,7 @@ export const jdashPlans: [IJdashPlan] = [
         name: 'starter',
         appLimit: '5',
         userLimit: '10',
-        price: '9.99'
+        price: '9.99',
     },
     {
         name: 'advanced',
@@ -25,3 +25,4 @@ export const jdashPlans: [IJdashPlan] = [
         price: '69.99'
     }
 ]
+
