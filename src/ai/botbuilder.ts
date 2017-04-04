@@ -4,6 +4,7 @@ import * as restify from 'restify';
 export class BotBase {
 
     bot: botbuilder.UniversalBot;
+    weather: object;
 
     loadBot(server: restify.Server) {
         return new Promise((resolve, reject) => {
@@ -13,7 +14,10 @@ export class BotBase {
                 appPassword: ''
             });
 
-            this.bot = new botbuilder.UniversalBot(connector);
+            this.bot = new botbuilder.UniversalBot(connector, (session) => {
+                session.send(this.weather.toString());
+                session.beginDialog('/watson');
+            });
             server.post('/api/messages', connector.listen());
             resolve();
         })
@@ -103,6 +107,10 @@ export class BotBase {
             .addAttachment(thumbNail);
 
         return session.send(reply);
+    }
+
+    saveWeather(report) {
+        this.weather = report;
     }
 
     constructor() {

@@ -95,6 +95,8 @@
                         }
                     }).then((res) => {
                         console.log('Got weather.');
+                    }).fail((err) => {
+                        console.log('Could not post to /weather.');
                     })
                 }).fail((err) => {
                     $.post('/weather', {
