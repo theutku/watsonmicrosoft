@@ -15,7 +15,7 @@ export class BotBase {
             });
 
             this.bot = new botbuilder.UniversalBot(connector, (session) => {
-                session.send(this.weather.toString()).beginDialog('/watson');
+                session.beginDialog('/watson');
             });
             server.post('/api/messages', connector.listen());
             resolve();
