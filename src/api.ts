@@ -44,18 +44,18 @@ class WatsonBotApp {
             //     res.end();
             // })
 
-            this.server.post('/weather', (req: restify.Request, res: restify.Response, next: restify.Next) => {
-                var data = req.body.data;
-                var err = req.body.err;
-                if (err) {
-                    console.log('Weather Error: ', err);
-                } else {
-                    BotBase.saveWeather(data);
-                    console.log(data);
-                    res.send(200);
-                }
+            // this.server.post('/weather', (req: restify.Request, res: restify.Response, next: restify.Next) => {
+            //     var data = req.body.data;
+            //     var err = req.body.err;
+            //     if (err) {
+            //         console.log('Weather Error: ', err);
+            //     } else {
+            //         BotBase.saveWeather(data);
+            //         console.log(data);
+            //         res.send(200);
+            //     }
 
-            })
+            // })
             resolve();
         })
 
@@ -64,7 +64,7 @@ class WatsonBotApp {
     init() {
         return new Promise((resolve, reject) => {
             this.server = restify.createServer();
-            this.server.use(restify.urlEncodedBodyParser({ mapParams: false }));
+            // this.server.use(restify.urlEncodedBodyParser({ mapParams: false }));
             this.server.listen(process.env.PORT, (err: Error) => {
                 if (err) {
                     console.log(err);
