@@ -12,7 +12,6 @@ class BasicInteraction extends WatsonBase {
             this.bot.dialog('/watson', [(session) => {
                 this.basicIntents(session.message.text, session).then(() => {
                     if (this.intent != 'greeting') {
-                        session.send(BasicInteraction.weather.toString());
                         session.send('Anything else I can help you with? Ask me more!');
                     } else {
                         session.endConversation();

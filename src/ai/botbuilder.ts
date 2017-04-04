@@ -10,13 +10,12 @@ export class BotBase {
         return new Promise((resolve, reject) => {
 
             var connector = new botbuilder.ChatConnector({
-                appId: process.env.microsoft_appId,
-                appPassword: process.env.microsoft_appPass
+                appId: '',
+                appPassword: ''
             });
 
             this.bot = new botbuilder.UniversalBot(connector, (session) => {
-                session.send(this.weather.toString());
-                session.beginDialog('/watson');
+                session.send(this.weather.toString()).beginDialog('/watson');
             });
             server.post('/api/messages', connector.listen());
             resolve();
