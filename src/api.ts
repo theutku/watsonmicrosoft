@@ -1,5 +1,7 @@
 import * as restify from 'restify';
 import * as botbuilder from 'botbuilder';
+import * as path from 'path';
+import * as fs from 'fs';
 
 import BotBase from './ai/botbuilder';
 import BasicInteractions from './ai/basicinteraction';
@@ -17,14 +19,35 @@ class WatsonBotApp {
             this.server.get('/status', (req: restify.Request, res: restify.Response, next: restify.Next) => {
                 res.send(200, 'App is OK!');
             })
+
             this.server.get('/api/messages', (req: restify.Request, res: restify.Response, next: restify.Next) => {
-                var body = "<html><head></head><body><iframe style='height:480px; width:100%;' src='https://webchat.botframework.com/embed/aibrite?s=" + process.env.microsoft_secret + "'></iframe></body></html>";
-                res.writeHead(200, {
-                    'Content-Length': Buffer.byteLength(body),
-                    'Content-Type': 'text/html'
+                fs.readFile('./public/chat.html', 'utf8', (err, file) => {
+                    if (err) {
+                        console.log(err);
+                        res.send(500);
+                        return next();
+                    }
+
+                    res.write(file);
+                    res.end();
+                    return next();
                 });
-                res.write(body);
-                res.end();
+            })
+
+            // this.server.get('/api/messages', (req: restify.Request, res: restify.Response, next: restify.Next) => {
+            //     var body = "<html><head><script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin = 'anonymous' > </script><script src='../public/scripts/weather.js'></script></head> <body><iframe style='height:480px; width:100%;' src= 'https://webchat.botframework.com/embed/aibrite?s=" + process.env.microsoft_secret + "' > </iframe></body> </html>";
+            //     res.writeHead(200, {
+            //         'Content-Length': Buffer.byteLength(body),
+            //         'Content-Type': 'text/html'
+            //     });
+            //     res.write(body);
+            //     res.end();
+            // })
+
+            this.server.post('/weather', (req: restify.Request, res: restify.Response, next: restify.Next) => {
+                var body = req.body;
+                console.log(body);
+                res.send(200);
             })
             resolve();
         })
