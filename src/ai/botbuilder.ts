@@ -10,8 +10,8 @@ export class BotBase {
         return new Promise((resolve, reject) => {
 
             var connector = new botbuilder.ChatConnector({
-                appId: '',
-                appPassword: ''
+                appId: process.env.microsoft_appId,
+                appPassword: process.env.microsoft_appPass
             });
 
             this.bot = new botbuilder.UniversalBot(connector, (session) => {
