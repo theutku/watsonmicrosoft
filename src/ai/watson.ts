@@ -57,9 +57,9 @@ export class WatsonBase extends BotBase {
             if (res.length || typeof res !== 'undefined') {
                 switch (this.intent) {
                     case 'greeting':
-                        session.send(res)
+                        session.send(res);
                         var choices = ['Aibrite, Inc.', 'Aibrite Services', 'Machine Learning and AI', 'Smart Data Visualisation', 'JDash Dashboard Framework', 'JDash Subscriptions'];
-                        return botbuilder.Prompts.choice(session, 'Which of the following would you like to learn more about?', choices)
+                        return botbuilder.Prompts.choice(session, 'Which of the following would you like to learn more about?', choices);
                     // break;
                     case 'services':
                         session.send(res);
