@@ -24,6 +24,7 @@ class BasicInteraction extends WatsonBase {
                     session.endDialog('I do not think you have chosen a valid option, have you?');
                 } else {
                     var userChoice = result.response.entity;
+                    console.log(userChoice);
                     this.basicIntents(userChoice, session).then(() => {
                         session.send('Anything else I can help you with? Ask me more!');
                     }).catch((err) => {
