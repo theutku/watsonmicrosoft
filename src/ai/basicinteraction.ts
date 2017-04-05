@@ -14,7 +14,7 @@ class BasicInteraction extends WatsonBase {
                     if (this.intent != 'greeting') {
                         session.send('Anything else I can help you with? Ask me more!');
                     } else {
-                        session.endConversation();
+                        session.endDialog();
                     }
                 }).catch((err) => {
                     reject(err);
