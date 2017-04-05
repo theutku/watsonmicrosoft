@@ -14,9 +14,7 @@ export class BotBase {
                 appPassword: process.env.microsoft_appPass
             });
 
-            this.bot = new botbuilder.UniversalBot(connector, (session) => {
-                session.beginDialog('/watson');
-            });
+            this.bot = new botbuilder.UniversalBot(connector);
             server.post('/api/messages', connector.listen());
             resolve();
         })
