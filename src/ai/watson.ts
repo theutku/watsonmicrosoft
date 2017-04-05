@@ -27,6 +27,7 @@ export class WatsonBase extends BotBase {
 
     watsonMessage(message: string): Promise<string> {
         return new Promise((resolve, reject) => {
+            console.log(message);
             this.conversations.message({
                 workspace_id: process.env.workspaceId,
                 input: { 'text': message },

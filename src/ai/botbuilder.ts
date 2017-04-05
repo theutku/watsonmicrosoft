@@ -22,7 +22,7 @@ export class BotBase {
 
     createNewMessage(session: botbuilder.Session, layoutType: string, attachments?: any[]) {
         return new botbuilder.Message(session)
-            .attachmentLayout(botbuilder.AttachmentLayout.carousel)
+            .attachmentLayout(botbuilder.AttachmentLayout[layoutType])
             .attachments(attachments);
     }
 
