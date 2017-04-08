@@ -78,7 +78,7 @@ export class WatsonBase extends BotBase {
                         session.send(res);
                         break;
                     case 'aibrite':
-                        this.sendThumbnailCard(session, 'Aibrite', 'http://aibrite.com/wp-content/uploads/2017/03/cropped-cropped-logo-1-e1490694687582.png', 'http://aibrite.com/', 'MACHINE INTELLIGENCE AND SMART DATA VISUALIZATIONS', 'As being a machine intelligence & data visualization company we can add artificial intelligence to your existing applications. We can analyse your data and automatically generate smart data visualizations. You can also use our dashboard framework Jdash to add drag-drop dashboards into your applications.', 'Homepage')
+                        this.sendThumbnailCard(session, 'Aibrite', 'http://aibrite.com/wp-content/uploads/2017/03/logo-last-1.png', 'http://aibrite.com/', 'MACHINE INTELLIGENCE AND SMART DATA VISUALIZATIONS', 'As being a machine intelligence & data visualization company we can add artificial intelligence to your existing applications. We can analyse your data and automatically generate smart data visualizations. You can also use our dashboard framework Jdash to add drag-drop dashboards into your applications.', 'Homepage')
                         session.send(res);
                         break;
                     case 'address':
